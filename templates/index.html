@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Niche Job Radar</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #f0f4f8;
+            color: #333;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            margin-bottom: 30px;
+            border-bottom: 1px solid #cbd5e0;
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            margin: 0;
+            color: #2d3748;
+        }
+
+        .subtitle {
+            color: #718096;
+            margin-top: 5px;
+            font-size: 0.95rem;
+        }
+
+        .refresh-btn {
+            float: right;
+            background: #3182ce;
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .refresh-btn:hover {
+            background: #2b6cb0;
+        }
+
+        .job-card {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #e2e8f0;
+            border-left-width: 6px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .job-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s;
+        }
+
+        .source-tag {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        /* New: Keyword Pills */
+        .keyword-pill {
+            display: inline-block;
+            background: #ebf8ff;
+            color: #2c5282;
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 12px;
+            margin-right: 5px;
+            font-weight: 600;
+            border: 1px solid #bee3f8;
+        }
+
+        .job-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin: 0 0 8px 0;
+        }
+
+        .job-title a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .job-title a:hover {
+            color: #3182ce;
+        }
+
+        .description {
+            font-size: 0.95rem;
+            color: #4a5568;
+            line-height: 1.5;
+            margin-top: 15px;
+        }
+
+        .apply-btn {
+            display: inline-block;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #3182ce;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .apply-btn:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <a href="/" class="refresh-btn">🔄 Scan Again</a>
+        <div class="header">
+            <h1>💊 Healthcare & Web Radar</h1>
+            <div class="subtitle">Filtered for: <strong>Healthcare/Pharma</strong> + <strong>Web/Content</strong></div>
+            <div style="margin-top: 10px; font-size: 0.85rem; color: #718096;">Found {{ count }} high-relevance matches.
+            </div>
+        </div>
+
+        {% for job in jobs %}
+        <div class="job-card" style="border-left-color: {{ job.badge_color }};">
+            <span class="source-tag" style="background-color: {{ job.badge_color }};">{{ job.source }}</span>
+
+            <div style="margin-bottom: 8px;">
+                {% for kw in job.matched_keywords %}
+                <span class="keyword-pill">✓ {{ kw }}</span>
+                {% endfor %}
+            </div>
+
+            <h2 class="job-title"><a href="{{ job.link }}" target="_blank">{{ job.title }}</a></h2>
+            <div style="font-size: 0.8rem; color: #a0aec0;">Posted: {{ job.published }}</div>
+
+            <div class="description">{{ job.summary }}</div>
+            <a href="{{ job.link }}" target="_blank" class="apply-btn">View Listing &rarr;</a>
+        </div>
+        {% else %}
+        <div style="text-align: center; padding: 4rem; color: #a0aec0;">
+            <h3>No matches found.</h3>
+            <p>The filter is very strict! This is good—it means no junk.</p>
+            <p>Try adding more generic terms to the Python script if you want to broaden the search.</p>
+        </div>
+        {% endfor %}
+    </div>
+
+</body>
+
+</html>
